@@ -301,28 +301,18 @@ if(T){
 ############ SCVIS write down the data 
 #################################################################################################
 if(F){
-  load(paste0(WORKDIR,"GTEX_counts.RData"))
-  e <- log2(e+1)
-  
-  f <- apply(e,1,function(x){
-    round((x-mean(x))/sd(x),2)
-  }) %>% t %>% as.data.frame
-  
-  write.table(f[,1:11688],file=paste0(WORKDIR,"GTEX_RowMeanScaled.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  write.table(f[,11689:11696],file=paste0(WORKDIR,"parathyroid_RowMeanScaled.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  
+  source("vars.R")
   load(file=paste0(WORKDIR,"5k_rowMeanScaledCounts.RData"))
   f <- t(f) %>% as.data.frame
   write.table(f[1:11688,],file=paste0(WORKDIR,"GTEX_t5kRowMeanScaled.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
   write.table(f[11689:11696,],file=paste0(WORKDIR,"parathyroid_t5kRowMeanScaled.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  rm(f)
   
+  source("vars.R")
   load(paste0(WORKDIR,"GTEX_counts.RData"))
   e <- log2(e+1)
   e <- apply(e,1,function(x){
     round((x-mean(x))/sd(x),2)
   }) %>% t %>% as.data.frame
-  
   write.table(e[1:11688,],file=paste0(WORKDIR,"GTEX_t.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
   write.table(e[11689:11696,],file=paste0(WORKDIR,"parathyroid_t.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
   
@@ -335,14 +325,7 @@ if(F){
   e <- t(e)
   e <- as.data.frame(e)
   write.table(e[1:11688,],file=paste0(WORKDIR,"GTEX_t5kZscore.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  
-  load(paste0(WORKDIR,"5k_selectedFeatures.RData"))
-  e <- apply(e[,11689:11696],1,function(x){
-    round((x -mean(x,na.rm = T))/sd(x,na.rm = T),2)
-  }) %>% t %>% as.data.frame
-  e <- t(e)
-  e <- as.data.frame(e)
-  write.table(e,file=paste0(WORKDIR,"parathyroid_t5kZscore_0.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
+  write.table(e[11689:11696,],file=paste0(WORKDIR,"parathyroid_t5kZscore.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
   
   
   source("vars.R")
@@ -353,27 +336,9 @@ if(F){
   e <- t(e)
   e <- as.data.frame(e)
   write.table(e[1:11688,],file=paste0(WORKDIR,"GTEX_t10kZscore.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
+  write.table(e[11689:11696,],file=paste0(WORKDIR,"parathyroid_t10kZscore.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
   
-  source("vars.R")
-  load(paste0(WORKDIR,"10k_selectedFeatures.RData"))
-  e <- apply(e[,11689:11696],1,function(x){
-    round((x -mean(x))/sd(x),2)
-  }) %>% t %>% as.data.frame
-  e <- t(e)
-  e <- as.data.frame(e)
-  write.table(e,file=paste0(WORKDIR,"parathyroid_t10kZscore_0.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  
-  
-  source("vars.R")
-  load(paste0(WORKDIR,"5k_selectedFeatures.RData"))
-  e <- apply(e[,11689:11696],1,function(x){
-    x <- log2(x+1)
-    round((x -mean(x,na.rm = T))/sd(x,na.rm = T),2)
-  }) %>% t %>% as.data.frame
-  e <- t(e)
-  e <- as.data.frame(e)
-  write.table(e,file=paste0(WORKDIR,"parathyroid_t5kRowMeanScaled_0.tsv"),sep = "\t",quote = F,col.names = T,row.names = F)
-  
+   
 }
  ## 
 
